@@ -1,5 +1,6 @@
 package net.hypr.doki.commands;
 
+import com.freya02.botcommands.api.annotations.CommandMarker;
 import com.freya02.botcommands.api.prefixed.CommandEvent;
 import com.freya02.botcommands.api.prefixed.TextCommand;
 import com.freya02.botcommands.api.prefixed.annotations.Category;
@@ -11,10 +12,11 @@ import net.dv8tion.jda.api.entities.SelfUser;
 
 import java.awt.*;
 
-@Category("Misc")
+@CommandMarker
+@Category("Utils")
 @Description("Get about info")
 public class About extends TextCommand {
-    @JDATextCommand(name = "about")
+    @JDATextCommand(name = "about", aliases = {"doki"})
     public void execute(CommandEvent event) {
         JDA jda = event.getJDA();
         SelfUser selfUser = jda.getSelfUser();
