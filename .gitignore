@@ -39,6 +39,8 @@ build/
 
 ### Other Stuff ###
 **/resources/config*.json
+!**/resources/config.example.json
+!**/resources/config.schema.json
 
 ### why would this not be here already ###
-logs/
+/logs/

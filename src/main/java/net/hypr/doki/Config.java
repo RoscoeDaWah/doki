@@ -19,12 +19,11 @@ public class Config {
      * @throws IOException if the config JSON could not be read
      */
     public static Config readConfig() throws IOException {
-        System.out.println(Path.of("config.json"));
         try (InputStream in=Thread.currentThread().getContextClassLoader().getResourceAsStream("config.json")) {
             assert in != null;
             Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             return new Gson().fromJson(reader, Config.class);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             throw new IOException("""
 					config.json was not found in the root folder (of the project), did you forget to put it ?
 					Example structure:
