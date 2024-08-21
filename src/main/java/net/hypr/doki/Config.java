@@ -10,7 +10,8 @@ import java.nio.file.Path;
 //You will need a valid config.json in the package com.freya02.bot for this to work
 public class Config {
     @SuppressWarnings("unused") private String token;
-    @SuppressWarnings("unused") private DBConfig dbConfig;
+    @SuppressWarnings("unused") private String prefix;
+    @SuppressWarnings("unused") private DBConfig mariadb;
 
     /**
      * Returns the configuration object for this bot
@@ -38,18 +39,17 @@ public class Config {
     public String getToken() {
         return token;
     }
+    public String getPrefix() { return prefix; }
 
     public DBConfig getDbConfig() {
-        return dbConfig;
+        return mariadb;
     }
 
     public static class DBConfig {
-        @SuppressWarnings("unused") private String serverName, user, password, dbName;
+        @SuppressWarnings("unused") private String host, user, password, database;
         @SuppressWarnings("unused") private int portNumber;
 
-        public String getServerName() {
-            return serverName;
-        }
+        public String getHost() { return host; }
 
         public String getUser() {
             return user;
@@ -59,10 +59,7 @@ public class Config {
             return password;
         }
 
-        public String getDbName() {
-            return dbName;
-        }
-
+        public String getDatabase() { return database; }
         public int getPortNumber() {
             return portNumber;
         }
