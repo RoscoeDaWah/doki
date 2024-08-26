@@ -29,7 +29,7 @@ public class Doki {
     public static String getPrefix() { return config.getPrefix(); }
     public static BasicDataSource getDataSource() { return dataSource; }
 
-    public static Doki start() throws IOException, InterruptedException {
+    public static void start() throws IOException, InterruptedException {
         config = Config.readConfig();
         Config.DBConfig dbConfig = config.getDbConfig();
 
@@ -56,7 +56,7 @@ public class Doki {
             LOGGER.info("\t- {} ({})", guild.getName(), guild.getId());
         }
 
-        return new Doki(jda, config);
+        new Doki(jda, config);
     }
 
     public static void main(String[] args) {
