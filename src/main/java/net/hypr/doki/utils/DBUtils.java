@@ -36,9 +36,9 @@ public class DBUtils {
 
         // Find out if the user is already in the DB
         try {
-            log.debug("Searching DB for (usr" + user_id + ",srv:" + server_id + ")");
+            log.debug("Searching DB for (usr{},srv:{})", user_id, server_id);
             Set<BigInteger> foundIds = qr.query("SELECT user_id FROM users WHERE user_id = " + user_id + " AND server_id = " + server_id, resultSetHandler);
-            log.debug("Matching records: " + foundIds.size());
+            log.debug("Matching records: {}", foundIds.size());
             return !foundIds.isEmpty();
         } catch (SQLException ignored) {
             log.debug("An SQL error occurred");
@@ -55,7 +55,7 @@ public class DBUtils {
      */
     public static void createUserRecord(long user_id, long server_id, String username) throws SQLException {
         Logger log = Logging.getLogger();
-        log.info("Creating record (usr:" + user_id + ",srv:" + server_id + ",unm:" + username + ")");
+        log.info("Creating record (usr:{},srv:{},unm:{})", user_id, server_id, username);
         BasicDataSource dataSource = Doki.getDataSource();
         Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(
@@ -66,7 +66,7 @@ public class DBUtils {
         stmt.setString(3, username);
         stmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
         stmt.execute();
-        log.info("Record (usr:" + user_id + ",srv:" + server_id + ",unm:" + username + ") created!");
+        log.info("Record (usr:{},srv:{},unm:{}) created!", user_id, server_id, username);
     }
 
     /**
@@ -81,7 +81,7 @@ public class DBUtils {
      */
     public static void updateUserRecord(long user_id, long server_id, Timestamp now, int xp, int totalXp, int level) throws SQLException {
         Logger log = Logging.getLogger();
-        log.info("Updating record (usr:" + user_id + ",srv:" + server_id + ")");
+        log.info("Updating record (usr:{},srv:{})", user_id, server_id);
         BasicDataSource dataSource = Doki.getDataSource();
         Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(
@@ -94,7 +94,7 @@ public class DBUtils {
         stmt.setLong(5, user_id);
         stmt.setLong(6, server_id);
         stmt.executeQuery();
-        log.info("Updated record (usr:" + user_id + ",srv:" + server_id + ")!");
+        log.info("Updated record (usr:{},srv:{})!", user_id, server_id);
     }
 
     /**

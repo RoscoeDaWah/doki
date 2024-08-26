@@ -29,7 +29,7 @@ public class LevellingListener extends ListenerAdapter {
                         event.getAuthor().isBot() ||
                         event.getMessage().getContentStripped().startsWith(Doki.getPrefix())
         ) {
-            log.debug("Ignoring self/bot message with ID " + event.getMessageId());
+            log.debug("Ignoring self/bot message with ID {}", event.getMessageId());
             return;
         }
 
@@ -47,13 +47,13 @@ public class LevellingListener extends ListenerAdapter {
                     // it has been over an hour since the user last sent a message that affected XP
                     LevellingUtils.incrementXp(log, rec);
                 } else {
-                    log.debug("Ignoring message ID " + event.getMessageId() + " as not enough time has passed");
+                    log.debug("Ignoring message ID {} as not enough time has passed", event.getMessageId());
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else {
-            log.info("No record of user ID " + user.getId() + " in server " + guild.getId() + ", creating blank record");
+            log.info("No record of user ID {} in server {}, creating blank record", user.getId(), guild.getId());
             try {
                 DBUtils.createUserRecord(user.getIdLong(), guild.getIdLong(), user.getName());
             } catch (SQLException e) {

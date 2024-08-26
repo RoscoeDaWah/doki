@@ -1,4 +1,4 @@
-<img src="https://git.frzn.dev/fwoppydwisk/doki/raw/branch/master/assets/logo.svg" alt="" height="100" align="center"/>
+<img src="https://git.frzn.dev/fwoppydwisk/doki/raw/branch/master/assets/logo.svg" alt="" height="100"/>
 <hr>
 A multipurpose Discord bot written in Java.
 

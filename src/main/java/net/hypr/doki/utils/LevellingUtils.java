@@ -27,9 +27,9 @@ public class LevellingUtils {
                 totalXp,
                 levelNew
         );
-        logger.info("Incremented " + userRecord.username + "'s XP in " + userRecord.server_id + " (" + userRecord.xp + " -> " + xpNew + ")");
+        logger.info("Incremented {}'s XP in {} ({} -> {})", userRecord.username, userRecord.server_id, userRecord.xp, xpNew);
         if (levelNew > userRecord.level) {
-            logger.info("Incremented " + userRecord.username + "'s level in " + userRecord.server_id + " (" + userRecord.level + " -> " + levelNew + ")");
+            logger.info("Incremented {}'s level in {} ({} -> {})", userRecord.username, userRecord.server_id, userRecord.level, levelNew);
         }
     }
 }

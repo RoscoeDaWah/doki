@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 
 //You can add more fields in this class, if your input json matches the structure
 //You will need a valid config.json in the package com.freya02.bot for this to work

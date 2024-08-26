@@ -61,7 +61,8 @@ public class Doki {
 
     public static void main(String[] args) {
         try {
-            jda = start().getJDA();
+            start();
+            jda = getJDA();
             CommandsBuilder.newBuilder(437970062922612737L)
                     .textCommandBuilder(textCommandsBuilder -> textCommandsBuilder.addPrefix(getPrefix()))
                     .build(jda, "net.hypr.doki.commands"); //Registering listeners is taken care of by the lib
