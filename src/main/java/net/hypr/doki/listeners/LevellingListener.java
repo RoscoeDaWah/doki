@@ -19,11 +19,20 @@ public class LevellingListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Logger log = Logging.getLogger();
+
         /* Ignore the message if one of the following conditions is met:
           - Message is from self user
-          - Message is from bot
+          - Message is from a bot
           - Message is command (starts with bot prefix)
+          - Message is a Direct Message to the bot
         */
+        try {
+            event.getGuild();
+        } catch (IllegalStateException ex) {
+            log.debug("Ignoring direct message with ID {}", event.getMessageId());
+            return;
+        }
+
         if (
                 Doki.getJDA().getSelfUser().getId().equals(event.getAuthor().getId()) ||
                         event.getAuthor().isBot() ||

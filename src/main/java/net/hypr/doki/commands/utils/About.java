@@ -1,4 +1,4 @@
-package net.hypr.doki.commands;
+package net.hypr.doki.commands.utils;
 
 import com.freya02.botcommands.api.annotations.CommandMarker;
 import com.freya02.botcommands.api.prefixed.CommandEvent;
