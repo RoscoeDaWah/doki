@@ -1,6 +1,8 @@
 package net.hypr.doki;
 
+import com.freya02.botcommands.api.Logging;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,12 +21,15 @@ public class Config {
      * @throws IOException if the config JSON could not be read
      */
     public static Config readConfig() throws IOException {
+        Logger log = Logging.getLogger();
         try (InputStream in=Thread.currentThread().getContextClassLoader().getResourceAsStream("config.json")) {
             assert in != null;
             Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
+            log.info("Loaded config");
             return new Gson().fromJson(reader, Config.class);
         } catch (IOException | NullPointerException e) {
-            throw new IOException("config.json was not found, did you forget to create it?", e);
+            log.error("Failed to load config.json, does the file exist?");
+            throw new IOException(e);
         }
     }
 

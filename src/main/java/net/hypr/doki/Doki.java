@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import java.io.IOException;
 
 public class Doki {
-    private static final Logger LOGGER = Logging.getLogger();
+    private static final Logger log = Logging.getLogger();
     private static JDA jda;
     private static Config config;
     private static final BasicDataSource dataSource = new BasicDataSource();
@@ -50,10 +50,10 @@ public class Doki {
         dataSource.setInitialSize(10);
 
         //Print some information about the bot
-        LOGGER.info("Bot connected as {}", jda.getSelfUser().getAsTag());
-        LOGGER.info("The bot is present on these guilds :");
+        log.info("Bot connected as {}", jda.getSelfUser().getAsTag());
+        log.info("The bot is present in the following guilds:");
         for (Guild guild : jda.getGuildCache()) {
-            LOGGER.info("\t- {} ({})", guild.getName(), guild.getId());
+            log.info("\t- {} ({})", guild.getName(), guild.getId());
         }
 
         new Doki(jda, config);
@@ -68,7 +68,7 @@ public class Doki {
                     .build(jda, "net.hypr.doki.commands"); //Registering listeners is taken care of by the lib
             jda.addEventListener(new LevellingListener());
         } catch (Exception e) {
-            LOGGER.error("Unable to start the bot", e);
+            log.error("Failed to start the bot", e);
             System.exit(-1);
         }
     }
