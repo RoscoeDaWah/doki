@@ -53,7 +53,7 @@ public class DBUtils {
      * @param username  The users username
      * @throws SQLException A SQL exception
      */
-    public static void createUserRecord(long user_id, long server_id, String username) throws SQLException {
+    public static UserRecord createUserRecord(long user_id, long server_id, String username) throws SQLException {
         Logger log = Logging.getLogger();
         log.info("Creating record (usr:{},srv:{},unm:{})", user_id, server_id, username);
         BasicDataSource dataSource = Doki.getDataSource();
@@ -67,6 +67,7 @@ public class DBUtils {
         stmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
         stmt.execute();
         log.info("Record (usr:{},srv:{},unm:{}) created!", user_id, server_id, username);
+        return new UserRecord(user_id, server_id, username);
     }
 
     /**
