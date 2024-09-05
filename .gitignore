@@ -39,8 +39,8 @@ build/
 .DS_Store
 
 ### Other Stuff ###
-**/resources/config*.json
-!**/resources/config.example.json
+config*.json
+config.example.json
 !**/resources/config.schema.json
 
 ### why would this not be here already ###

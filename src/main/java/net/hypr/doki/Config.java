@@ -22,8 +22,7 @@ public class Config {
      */
     public static Config readConfig() throws IOException {
         Logger log = Logging.getLogger();
-        try (InputStream in=Thread.currentThread().getContextClassLoader().getResourceAsStream("config.json")) {
-            assert in != null;
+        try (InputStream in = new FileInputStream("./config.json")) {
             Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             log.info("Loaded config");
             return new Gson().fromJson(reader, Config.class);
