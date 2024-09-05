@@ -6,7 +6,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 //You can add more fields in this class, if your input json matches the structure
-//You will need a valid config.json in the package com.freya02.bot for this to work
+//You will need a valid config.json in the resources folder for this to work
 public class Config {
     @SuppressWarnings("unused") private String token;
     @SuppressWarnings("unused") private String prefix;
@@ -24,14 +24,7 @@ public class Config {
             Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             return new Gson().fromJson(reader, Config.class);
         } catch (IOException | NullPointerException e) {
-            throw new IOException("""
-					config.json was not found in the root folder (of the project), did you forget to put it ?
-					Example structure:
-
-					{
-						"token": "[your_bot_token_here]"
-					}
-					""", e);
+            throw new IOException("config.json was not found, did you forget to create it?", e);
         }
     }
 
