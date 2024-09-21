@@ -50,24 +50,22 @@ public class DBUtils {
      * Creates a new user record
      * @param user_id   The users ID
      * @param server_id The server ID
-     * @param username  The users username
      * @throws SQLException A SQL exception
      */
-    public static UserRecord createUserRecord(long user_id, long server_id, String username) throws SQLException {
+    public static UserRecord createUserRecord(long user_id, long server_id) throws SQLException {
         Logger log = Logging.getLogger();
-        log.info("Creating record (usr:{},srv:{},unm:{})", user_id, server_id, username);
+        log.info("Creating record (usr:{},srv:{})", user_id, server_id);
         BasicDataSource dataSource = Doki.getDataSource();
         Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO users (user_id, server_id, username, last_message) VALUES (?, ?, ?, ?)"
+                "INSERT INTO users (user_id, server_id, last_message) VALUES (?, ?, ?)"
         );
         stmt.setLong(1, user_id);
         stmt.setLong(2, server_id);
-        stmt.setString(3, username);
-        stmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+        stmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
         stmt.execute();
-        log.info("Record (usr:{},srv:{},unm:{}) created!", user_id, server_id, username);
-        return new UserRecord(user_id, server_id, username);
+        log.info("Record (usr:{},srv:{}) created!", user_id, server_id);
+        return new UserRecord(user_id, server_id);
     }
 
     /**
@@ -109,7 +107,7 @@ public class DBUtils {
         BasicDataSource dataSource = Doki.getDataSource();
         Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(
-                "SELECT user_id, server_id, username, last_message, xp, total_xp, level FROM users WHERE user_id = ? AND server_id = ?"
+                "SELECT user_id, server_id, last_message, xp, total_xp, level FROM users WHERE user_id = ? AND server_id = ?"
         );
         stmt.setLong(1, user_id);
         stmt.setLong(2, server_id);
@@ -118,7 +116,6 @@ public class DBUtils {
         return new UserRecord(
                 rs.getLong("user_id"),
                 rs.getLong("server_id"),
-                rs.getString("username"),
                 rs.getTimestamp("last_message"),
                 rs.getInt("xp"),
                 rs.getInt("total_xp"),
@@ -136,7 +133,7 @@ public class DBUtils {
         BasicDataSource dataSource = Doki.getDataSource();
         Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(
-                "SELECT user_id, username, last_message, xp, total_xp, level FROM users WHERE server_id = ?"
+                "SELECT user_id, last_message, xp, total_xp, level FROM users WHERE server_id = ?"
         );
         stmt.setLong(1, server_id);
         ResultSet rs = stmt.executeQuery();
@@ -145,7 +142,6 @@ public class DBUtils {
             userRecordList.add(new UserRecord(
                     rs.getLong("user_id"),
                     server_id,
-                    rs.getString("username"),
                     rs.getTimestamp("last_message"),
                     rs.getInt("xp"),
                     rs.getInt("total_xp"),

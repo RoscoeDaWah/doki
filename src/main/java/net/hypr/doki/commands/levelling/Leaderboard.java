@@ -7,6 +7,8 @@ import com.freya02.botcommands.api.prefixed.annotations.Category;
 import com.freya02.botcommands.api.prefixed.annotations.Description;
 import com.freya02.botcommands.api.prefixed.annotations.JDATextCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.User;
 import net.hypr.doki.utils.DBUtils;
 import net.hypr.doki.utils.UserRecord;
 
@@ -29,13 +31,15 @@ public class Leaderboard extends TextCommand {
 
     private EmbedBuilder buildLeaderboardEmbed(List<UserRecord> userRecords , CommandEvent event) {
         StringBuilder leaderboard = new StringBuilder();
+        JDA jda = event.getJDA();
         int idx = 1;
         for (UserRecord record : userRecords) {
+            User user = jda.retrieveUserById(record.user_id).complete();
             leaderboard
                     .append("**")
                     .append(idx)
                     .append(".** ")
-                    .append(record.username)
+                    .append(user.getName())
                     .append(" - ")
                     .append(record.level)
                     .append(" (")
