@@ -16,13 +16,7 @@ A multipurpose Discord bot written in Java.
 ```json
 {
   "token": "your_token",
-  "prefix": "oki!",
-  "mariadb": {
-    "host": "127.0.0.1",
-    "user": "db_user",
-    "password": "db_password",
-    "database": "doki_prod"
-  }
+  "prefix": "oki!"
 }
 ```
 
@@ -30,10 +24,9 @@ A multipurpose Discord bot written in Java.
 
 ## Commands
 
-| Command       | Description                                                                  | Arguments     | Aliases |
-|---------------|------------------------------------------------------------------------------|---------------|---------|
-| `leaderboard` | Gets the leaderboard for the current guild                                   | None          | `lb`    |
-| `rank`        | Gets the rank of the specified user (message author if none specified)       | `[user ping]` | None    |
-| `about`       | Gets information about the bot                                               | None          | None    |
-| `ping`        | Gets the bot's gateway & rest ping                                           | None          | None    |
-| `whois`       | Gets information about the specified user (message author if none specified) | `[user ping]` | None    |
+| Command | Description                                                                  | Arguments                           | Aliases |
+|---------|------------------------------------------------------------------------------|-------------------------------------|---------|
+| `about` | Gets information about the bot                                               | None                                | None    |
+| `ping`  | Gets the bot's gateway & rest ping                                           | None                                | None    |
+| `whois` | Gets information about the specified user (message author if none specified) | `[user ping]`                       | None    |
+| `mute`  | Mutes a member for a specified amount of time                                | `[user ping]`, `[timeout duration]` | None    | 
