@@ -13,6 +13,7 @@ public class Config {
     @SuppressWarnings("unused") private String token;
     @SuppressWarnings("unused") private String prefix;
     @SuppressWarnings("unused") private DBConfig mariadb;
+    @SuppressWarnings("unused") private boolean levelling = false;
 
     /**
      * Returns the configuration object for this bot
@@ -36,6 +37,7 @@ public class Config {
         return token;
     }
     public String getPrefix() { return prefix; }
+    public boolean getLevelling() { return levelling; }
 
     public DBConfig getDbConfig() {
         return mariadb;

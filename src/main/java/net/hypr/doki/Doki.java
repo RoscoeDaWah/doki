@@ -31,7 +31,6 @@ public class Doki {
 
     public static void start() throws IOException, InterruptedException {
         config = Config.readConfig();
-        Config.DBConfig dbConfig = config.getDbConfig();
 
         final JDA jda = JDABuilder.createLight(config.getToken())
                 .setActivity(Activity.customStatus("Banned from everywhere"))
@@ -40,16 +39,19 @@ public class Doki {
                 .awaitReady();
 
         // Connect to the DB
-        dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
-        dataSource.setUrl("jdbc:mariadb://" + dbConfig.getHost() + ":" + dbConfig.getPortNumber() + "/" + dbConfig.getDatabase());
-        dataSource.setUsername(dbConfig.getUser());
-        dataSource.setPassword(dbConfig.getPassword());
-        dataSource.setMaxTotal(10);
-        dataSource.setMaxIdle(5);
-        dataSource.setMinIdle(2);
-        dataSource.setInitialSize(10);
+        if (config.getLevelling()) {
+            Config.DBConfig dbConfig = config.getDbConfig();
+            dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
+            dataSource.setUrl("jdbc:mariadb://" + dbConfig.getHost() + ":" + dbConfig.getPortNumber() + "/" + dbConfig.getDatabase());
+            dataSource.setUsername(dbConfig.getUser());
+            dataSource.setPassword(dbConfig.getPassword());
+            dataSource.setMaxTotal(10);
+            dataSource.setMaxIdle(5);
+            dataSource.setMinIdle(2);
+            dataSource.setInitialSize(10);
+        }
 
-        //Print some information about the bot
+        // Print some information about the bot
         log.info("Bot connected as {}", jda.getSelfUser().getAsTag());
         log.info("The bot is present in the following guilds:");
         for (Guild guild : jda.getGuildCache()) {
@@ -66,7 +68,11 @@ public class Doki {
             CommandsBuilder.newBuilder(437970062922612737L)
                     .textCommandBuilder(textCommandsBuilder -> textCommandsBuilder.addPrefix(getPrefix()))
                     .build(jda, "net.hypr.doki.commands"); //Registering listeners is taken care of by the lib
-            jda.addEventListener(new LevellingListener());
+            if (config.getLevelling()) {
+                jda.addEventListener(new LevellingListener());
+            } else {
+                log.info("Levelling is disabled");
+            }
         } catch (Exception e) {
             log.error("Failed to start the bot", e);
             System.exit(-1);

@@ -64,7 +64,7 @@ public class LevellingListener extends ListenerAdapter {
         } else {
             log.info("No record of user ID {} in server {}, creating blank record", user.getId(), guild.getId());
             try {
-                UserRecord rec = DBUtils.createUserRecord(user.getIdLong(), guild.getIdLong(), user.getName());
+                UserRecord rec = DBUtils.createUserRecord(user.getIdLong(), guild.getIdLong());
                 LevellingUtils.incrementXp(log, rec);
             } catch (SQLException e) {
                 throw new RuntimeException(e);

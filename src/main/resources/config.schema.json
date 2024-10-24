@@ -32,6 +32,9 @@
         "password",
         "database"
       ]
+    },
+    "levelling": {
+      "type": "boolean"
     }
   },
   "required": [
