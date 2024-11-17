@@ -30,7 +30,6 @@ public class Doki {
 
         final JDA jda = JDABuilder.createLight(config.getToken())
                 .setActivity(Activity.customStatus("Banned from everywhere"))
-                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .build()
                 .awaitReady();
 
