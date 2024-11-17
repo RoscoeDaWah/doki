@@ -1,45 +1,40 @@
 package net.hypr.doki.commands.utils;
 
 import com.freya02.botcommands.api.annotations.CommandMarker;
-import com.freya02.botcommands.api.prefixed.BaseCommandEvent;
-import com.freya02.botcommands.api.prefixed.CommandEvent;
-import com.freya02.botcommands.api.prefixed.TextCommand;
+import com.freya02.botcommands.api.annotations.Optional;
+import com.freya02.botcommands.api.application.ApplicationCommand;
+import com.freya02.botcommands.api.application.CommandScope;
+import com.freya02.botcommands.api.application.annotations.AppOption;
+import com.freya02.botcommands.api.application.slash.GuildSlashEvent;
+import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.freya02.botcommands.api.prefixed.annotations.Category;
 import com.freya02.botcommands.api.prefixed.annotations.Description;
-import com.freya02.botcommands.api.prefixed.annotations.JDATextCommand;
-import com.freya02.botcommands.api.prefixed.annotations.TextOption;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @CommandMarker
 @Category("Utils")
 @Description("Get information about a user")
-public class WhoIs extends TextCommand {
-    @JDATextCommand(name = "whois", order = 1)
-    public void execute(BaseCommandEvent event, @TextOption(example = "<@437970062922612737>") Member user) {
-        EmbedBuilder whoIsEmbed = buildUserEmbed(user, (CommandEvent) event);
-        event.reply(whoIsEmbed.build()).queue();
+public class WhoIs extends ApplicationCommand {
+    @JDASlashCommand(
+            name = "whois",
+            description = "Gets information on a user"
+    )
+    public void whois(GuildSlashEvent event,
+                      @Optional @AppOption(name = "member") Member memberParam) {
+        Member member;
+        member = Objects.requireNonNullElseGet(memberParam, event::getMember);
+        EmbedBuilder whoIsEmbed = buildUserEmbed(member, event);
+        event.replyEmbeds(whoIsEmbed.build()).queue();
     }
 
-    @JDATextCommand(name = "whois", order = 2)
-    public void execute(BaseCommandEvent event, @TextOption(example = "<@437970062922612737>") User user) {
-        EmbedBuilder whoIsEmbed = buildUserEmbed((Member) user, (CommandEvent) event);
-        event.reply(whoIsEmbed.build()).queue();
-    }
-
-    @JDATextCommand(name = "whois", order = 3)
-    public void execute(CommandEvent event) {
-        EmbedBuilder whoIsEmbed = buildUserEmbed(event.getMember(), event);
-        event.reply(whoIsEmbed.build()).queue();
-    }
-
-    private EmbedBuilder buildUserEmbed(Member user, CommandEvent event) {
+    private EmbedBuilder buildUserEmbed(Member user, GuildSlashEvent event) {
          return new EmbedBuilder()
                  .setAuthor(user.getUser().getName(), null, user.getEffectiveAvatarUrl())
                  .setThumbnail(user.getEffectiveAvatarUrl())
