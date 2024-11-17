@@ -40,7 +40,7 @@ build/
 
 ### Other Stuff ###
 config*.json
-config.example.json
+!config.example.json
 !**/resources/config.schema.json
 
 ### why would this not be here already ###

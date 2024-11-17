@@ -5,7 +5,6 @@ import com.freya02.botcommands.api.Logging;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -23,7 +22,6 @@ public class Doki {
     public static JDA getJDA() {
         return jda;
     }
-    public static String getPrefix() { return config.getPrefix(); }
 
     public static void start() throws IOException, InterruptedException {
         config = Config.readConfig();

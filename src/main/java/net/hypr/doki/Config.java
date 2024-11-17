@@ -11,8 +11,6 @@ import java.nio.charset.StandardCharsets;
 //You will need a valid config.json in the resources folder for this to work
 public class Config {
     @SuppressWarnings("unused") private String token;
-    @SuppressWarnings("unused") private String prefix;
-    @SuppressWarnings("unused") private DBConfig mariadb;
 
     /**
      * Returns the configuration object for this bot
@@ -34,30 +32,5 @@ public class Config {
 
     public String getToken() {
         return token;
-    }
-    public String getPrefix() { return prefix; }
-
-    public DBConfig getDbConfig() {
-        return mariadb;
-    }
-
-    public static class DBConfig {
-        @SuppressWarnings("unused") private String host, user, password, database;
-        @SuppressWarnings("unused") private int portNumber;
-
-        public String getHost() { return host; }
-
-        public String getUser() {
-            return user;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public String getDatabase() { return database; }
-        public int getPortNumber() {
-            return portNumber;
-        }
     }
 }
