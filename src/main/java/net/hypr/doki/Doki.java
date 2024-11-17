@@ -49,7 +49,7 @@ public class Doki {
             start();
             jda = getJDA();
             CommandsBuilder.newBuilder(437970062922612737L)
-                    .textCommandBuilder(textCommandsBuilder -> textCommandsBuilder.addPrefix(getPrefix()))
+                    .textCommandBuilder(textCommandsBuilder -> textCommandsBuilder.disableHelpCommand(true))
                     .build(jda, "net.hypr.doki.commands"); //Registering listeners is taken care of by the lib
         } catch (Exception e) {
             log.error("Failed to start the bot", e);
