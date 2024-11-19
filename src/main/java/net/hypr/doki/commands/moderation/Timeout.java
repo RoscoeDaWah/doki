@@ -36,10 +36,25 @@ public class Timeout extends ApplicationCommand {
             subcommand = "cancel",
             description = "Cancels the specified users timeout"
     )
-    public void cancelMute(GuildSlashEvent event,
+    public void cancelTimeout(GuildSlashEvent event,
                            @AppOption(name = "member") Member member) {
         OffsetDateTime timeoutEnd = member.getTimeOutEnd();
         member.removeTimeout().queue();
         event.replyFormat("Removed %s's timeout (%s remaining)", member.getAsMention(), DurationUtils.getTimeDifference(timeoutEnd)).queue();
+    }
+
+    @JDASlashCommand(
+            name = "timeout",
+            subcommand = "get",
+            description = "Gets the specified users timeout status"
+    )
+    public void getTimeout(GuildSlashEvent event,
+                           @AppOption(name = "member") Member member) {
+        if (member.isTimedOut()) {
+            OffsetDateTime timeoutEnd = member.getTimeOutEnd();
+            event.replyFormat("%s is timed out for another %s", member.getAsMention(), DurationUtils.getTimeDifference(timeoutEnd)).setEphemeral(true).queue();
+        } else {
+            event.replyFormat("%s isn't timed out!", member.getAsMention()).setEphemeral(true).queue();
+        }
     }
 }
