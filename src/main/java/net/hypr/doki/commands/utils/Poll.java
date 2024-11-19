@@ -18,7 +18,7 @@ import java.util.Objects;
 
 @CommandMarker
 @BotPermissions(Permission.MESSAGE_SEND_POLLS)
-@UserPermissions(Permission.MESSAGE_SEND_POLLS)
+@UserPermissions(Permission.MESSAGE_MANAGE)
 public class Poll extends ApplicationCommand {
     @JDASlashCommand(
             name = "poll",
