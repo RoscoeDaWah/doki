@@ -28,6 +28,8 @@ public class DurationUtils {
     }
 
     public static String getTimeDifference(OffsetDateTime offsetDateTime) {
+        if (offsetDateTime == null) return "0 seconds";
+
         // Get the current Instant (current time)
         Instant now = Instant.now();
 
