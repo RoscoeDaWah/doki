@@ -23,9 +23,9 @@ public class Timeout extends ApplicationCommand {
             subcommand = "set",
             description = "Times out a member"
     )
-    public void mute(GuildSlashEvent event,
+    public void timeout(GuildSlashEvent event,
                      @AppOption(name = "member") Member member,
-                     @AppOption(name = "duration", description = "ex: 2h5m, must be between 1h and 7d") String duration) {
+                     @AppOption(name = "duration", description = "ex: 2h5m, must be between 1m and 7d") String duration) {
         Duration timeoutDuration = DurationUtils.parseDuration(duration);
         member.timeoutFor(timeoutDuration).queue();
         event.replyFormat("Timed out %s for %s", member.getAsMention(), duration).queue();
