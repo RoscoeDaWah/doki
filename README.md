@@ -1,5 +1,8 @@
 <img src="https://git.frzn.dev/fwoppydwisk/doki/raw/branch/master/assets/logo.svg" alt="" height="100"/>
 <hr>
+<img src="https://git.frzn.dev/fwoppydwisk/doki/badges/release.svg?style=for-the-badge" alt="">
+<img src="https://git.frzn.dev/fwoppydwisk/doki/badges/stars.svg?style=for-the-badge" alt="">
+<br>
 A multipurpose Discord bot written in Java.
 
 ## Tested Environments
