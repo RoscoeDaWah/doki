@@ -27,6 +27,10 @@ public class Timeout extends ApplicationCommand {
                      @AppOption(name = "member") Member member,
                      @AppOption(name = "duration", description = "ex: 2h5m, must be between 1m and 7d") String duration) {
         Duration timeoutDuration = DurationUtils.parseDuration(duration);
+        if (!DurationUtils.isDurationBetween(timeoutDuration, Duration.ofMinutes(1), Duration.ofDays(7))) {
+            event.replyFormat("Invalid duration %s!, must be between 1m and 7d", duration).queue();
+            return;
+        }
         member.timeoutFor(timeoutDuration).queue();
         event.replyFormat("Timed out %s for %s", member.getAsMention(), duration).queue();
     }

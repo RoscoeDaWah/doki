@@ -26,11 +26,15 @@ public class Poll extends ApplicationCommand {
     )
     public void poll(GuildSlashEvent event,
                      @AppOption(name = "title") String pollTitle,
-                     @AppOption(name = "duration", description = "ex: 2h5m, must be between 1h and 7d") String duration,
+                     @AppOption(name = "duration", description = "ex: 2h, must be between 1h and 7d") String duration,
                      @AppOption(name = "options", description = "Comma-seperated poll options") String options,
                      @Optional @AppOption(name = "multiple-choice", description = "Allow multiple choices? (defaults to false)") Boolean multiChoice) {
         Boolean pollMultiChoice = Objects.requireNonNullElse(multiChoice, false);
         Duration pollDuration = DurationUtils.parseDuration(duration);
+        if (!DurationUtils.isDurationBetween(pollDuration, Duration.ofHours(1), Duration.ofDays(7))) {
+            event.replyFormat("Invalid duration %s!, must be between 1h and 7d", duration).queue();
+            return;
+        }
         String[] pollOptions = options.split(",");
         MessagePollBuilder poll = MessagePollData.builder(pollTitle)
                 .setDuration(pollDuration);

@@ -7,26 +7,52 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DurationUtils {
-    private static final Pattern timePattern = Pattern.compile("(\\d+)([dhms])?");
-    public static Duration parseDuration(String input) throws IllegalArgumentException {
-        Matcher matcher = timePattern.matcher(input);
+    private static final Pattern DURATION_PATTERN = Pattern.compile(
+            "(\\d+d\\s*)?(\\d+h\\s*)?(\\d+m\\s*)?(\\d+s\\s*)?");
 
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException("Invalid duration format");
+    public static Duration parseDuration(String durationString) {
+        durationString = durationString.trim();
+
+        Matcher matcher = DURATION_PATTERN.matcher(durationString);
+        long days = 0;
+        long hours = 0;
+        long minutes = 0;
+        long seconds = 0;
+
+        if (matcher.matches()) {
+            // Extract days if present
+            if (matcher.group(1) != null) {
+                days = Long.parseLong(matcher.group(1).replace("d", "").trim());
+            }
+
+            // Extract hours if present
+            if (matcher.group(2) != null) {
+                hours = Long.parseLong(matcher.group(2).replace("h", "").trim());
+            }
+
+            // Extract minutes if present
+            if (matcher.group(3) != null) {
+                minutes = Long.parseLong(matcher.group(3).replace("m", "").trim());
+            }
+
+            // Extract seconds if present
+            if (matcher.group(4) != null) {
+                seconds = Long.parseLong(matcher.group(4).replace("s", "").trim());
+            }
         }
 
-        int value = Integer.parseInt(matcher.group(1));
-        String unit = matcher.group(2);
-
-        return switch (unit == null || unit.isEmpty() ? "m" : unit.toLowerCase()) {
-            case "d" -> Duration.ofDays(value);
-            case "h" -> Duration.ofHours(value);
-            case "m" -> Duration.ofMinutes(value);
-            case "s" -> Duration.ofSeconds(value);
-            default -> throw new IllegalArgumentException("Invalid unit");
-        };
+        return Duration.ofDays(days)
+                .plusHours(hours)
+                .plusMinutes(minutes)
+                .plusSeconds(seconds);
     }
 
+    public static boolean isDurationBetween(Duration target, Duration lowerThreshold, Duration upperThreshold) {
+        if (target == lowerThreshold || target == upperThreshold) return true;
+        return !target.isNegative() &&
+                (target.compareTo(lowerThreshold) >= 0) &&
+                (target.compareTo(upperThreshold) <= 0);
+    }
     public static String getTimeDifference(OffsetDateTime offsetDateTime) {
         if (offsetDateTime == null) return "0 seconds";
 
