@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DurationUtils {
-    private static final Pattern timePattern = Pattern.compile("(\\d+)(?:([dhms]))?");
+    private static final Pattern timePattern = Pattern.compile("(\\d+)([dhms])?");
     public static Duration parseDuration(String input) throws IllegalArgumentException {
         Matcher matcher = timePattern.matcher(input);
 
