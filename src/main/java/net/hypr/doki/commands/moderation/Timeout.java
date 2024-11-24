@@ -2,6 +2,7 @@ package net.hypr.doki.commands.moderation;
 
 import com.freya02.botcommands.api.annotations.BotPermissions;
 import com.freya02.botcommands.api.annotations.CommandMarker;
+import com.freya02.botcommands.api.annotations.Optional;
 import com.freya02.botcommands.api.annotations.UserPermissions;
 import com.freya02.botcommands.api.application.ApplicationCommand;
 import com.freya02.botcommands.api.application.annotations.AppOption;
@@ -13,6 +14,7 @@ import net.hypr.doki.utils.DurationUtils;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 
 @CommandMarker
 @BotPermissions(Permission.MODERATE_MEMBERS)
@@ -25,13 +27,15 @@ public class Timeout extends ApplicationCommand {
     )
     public void timeout(GuildSlashEvent event,
                      @AppOption(name = "member") Member member,
-                     @AppOption(name = "duration", description = "ex: 2h5m, must be between 1m and 7d") String duration) {
+                     @AppOption(name = "duration", description = "ex: 2h5m, must be between 1m and 7d") String duration,
+                     @Optional @AppOption(name = "reason") String reason) {
         Duration timeoutDuration = DurationUtils.parseDuration(duration);
         if (!DurationUtils.isDurationBetween(timeoutDuration, Duration.ofMinutes(1), Duration.ofDays(7))) {
             event.replyFormat("Invalid duration %s!, must be between 1m and 7d", duration).queue();
             return;
         }
-        member.timeoutFor(timeoutDuration).queue();
+        member.timeoutFor(timeoutDuration)
+                .reason(Objects.requireNonNullElse(reason, "No reason provided")).queue();
         event.replyFormat("Timed out %s for %s", member.getAsMention(), duration).queue();
     }
 
