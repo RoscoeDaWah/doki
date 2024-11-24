@@ -10,6 +10,7 @@ import com.freya02.botcommands.api.application.slash.GuildSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 import net.hypr.doki.utils.DurationUtils;
 
 import java.time.Duration;
@@ -34,8 +35,14 @@ public class Timeout extends ApplicationCommand {
             event.replyFormat("Invalid duration %s!, must be between 1m and 7d", duration).queue();
             return;
         }
-        member.timeoutFor(timeoutDuration)
-                .reason(Objects.requireNonNullElse(reason, "No reason provided")).queue();
+
+        try {
+            member.timeoutFor(timeoutDuration)
+                    .reason(Objects.requireNonNullElse(reason, "No reason provided")).queue();
+        } catch (HierarchyException ex) {
+            event.replyFormat("Failed to time out %s (member has roles above me!)", member.getAsMention()).setEphemeral(true).queue();
+            return;
+        }
         event.replyFormat("Timed out %s for %s", member.getAsMention(), duration).queue();
     }
 
@@ -45,9 +52,16 @@ public class Timeout extends ApplicationCommand {
             description = "Cancels the specified users timeout"
     )
     public void cancelTimeout(GuildSlashEvent event,
-                           @AppOption(name = "member") Member member) {
+                           @AppOption(name = "member") Member member,
+                           @Optional @AppOption(name = "reason") String reason) {
         OffsetDateTime timeoutEnd = member.getTimeOutEnd();
-        member.removeTimeout().queue();
+        try {
+            member.removeTimeout()
+                    .reason(Objects.requireNonNullElse(reason, "No reason provided")).queue();
+        } catch (HierarchyException ex) {
+            event.replyFormat("Failed to remove %s's timeout (member has roles above me!)", member.getAsMention()).setEphemeral(true).queue();
+            return;
+        }
         event.replyFormat("Removed %s's timeout (%s remaining)", member.getAsMention(), DurationUtils.getTimeDifference(timeoutEnd)).queue();
     }
 
