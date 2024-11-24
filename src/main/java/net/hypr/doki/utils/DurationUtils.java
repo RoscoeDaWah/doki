@@ -47,6 +47,7 @@ public class DurationUtils {
                 .plusSeconds(seconds);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isDurationBetween(Duration target, Duration lowerThreshold, Duration upperThreshold) {
         if (target == lowerThreshold || target == upperThreshold) return true;
         return !target.isNegative() &&
