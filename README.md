@@ -20,8 +20,7 @@ A multipurpose Discord bot written in Java.
 ## Config file schema
 ```json
 {
-  "token": "your_token",
-  "prefix": "oki!"
+  "token": "your_token"
 }
 ```
 
