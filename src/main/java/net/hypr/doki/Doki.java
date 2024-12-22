@@ -22,6 +22,10 @@ public class Doki {
     public static JDA getJDA() {
         return jda;
     }
+    public static Config getConfig() { return config; }
+    public static Logger getLogger() {
+        return log;
+    }
 
     public static void start() throws IOException, InterruptedException {
         config = Config.readConfig();

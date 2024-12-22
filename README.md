@@ -21,7 +21,8 @@ A multipurpose Discord bot written in Java.
 ## Config file schema
 ```json
 {
-  "token": "your_token"
+  "token": "your_token",
+  "warningChannel": 0
 }
 ```
 
@@ -37,3 +38,4 @@ A multipurpose Discord bot written in Java.
 | `/timeout get`    | Gets the current timeout status of the specified member                      | `[member]`                                                |
 | `/timeout cancel` | Cancels the specified users timeout                                          | `[member]`, `(reason)`                                    |
 | `/poll`           | Creates a poll                                                               | `[title]`, `[duration]`, `[options]`, `(multiple-choice)` | 
+| `/warn`           | Warns a user                                                                 | `[member]`, `[reason]`                                    |

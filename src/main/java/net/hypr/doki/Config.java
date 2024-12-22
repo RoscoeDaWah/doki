@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 //You will need a valid config.json in the resources folder for this to work
 public class Config {
     @SuppressWarnings("unused") private String token;
+    @SuppressWarnings("unused") private long warningChannel;
 
     /**
      * Returns the configuration object for this bot
@@ -32,5 +33,8 @@ public class Config {
 
     public String getToken() {
         return token;
+    }
+    public long getWarningChannel() {
+        return warningChannel;
     }
 }
