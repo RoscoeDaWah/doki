@@ -47,7 +47,7 @@ public class Warn extends ApplicationCommand {
         warnEmbed.setTitle(String.format("%s (%s) was warned", member.getEffectiveName(), member.getId()));
         try {
             assert warningChannel != null;
-            warningChannel.sendMessageEmbeds(warnEmbed.build()).queue();
+            warningChannel.sendMessage(member.getAsMention()).addEmbeds(warnEmbed.build()).queue();
         } catch (NullPointerException ex) {
             log.warn("Failed to send message to warning log channel");
         }
