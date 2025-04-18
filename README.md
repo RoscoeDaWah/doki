@@ -1,11 +1,8 @@
 <img src="https://git.frzn.dev/fwoppydwisk/doki/raw/branch/master/assets/logo.svg" alt="" height="100"/>
 <hr>
-<a href="https://git.frzn.dev/fwoppydwisk/doki/releases/latest">
-  <img src="https://git.frzn.dev/fwoppydwisk/doki/badges/release.svg?style=for-the-badge" alt="">
-</a>
-<img src="https://git.frzn.dev/fwoppydwisk/doki/badges/stars.svg?style=for-the-badge" alt="">
-<br>
 A multipurpose Discord bot written in Java.
+
+## Repository can now be found [here](https://git.frzn.dev/RoscoeDaWah/doki)
 
 ## Required Environment
 - Java 17+ (May work on older versions but untested)
